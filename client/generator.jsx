@@ -8,6 +8,7 @@ import Spinner from "./components/spinner.jsx";
 import SectionBox from "./components/sectionBox.jsx";
 import SectionHeader from "./components/sectionHeader.jsx";
 import ResultInput from "./components/resultInput.jsx";
+import Error from "./components/error.jsx";
 
 const Container = styled.div`
   display: flex;
@@ -44,6 +45,7 @@ class Generator extends React.Component {
       resultGamerTag: '',
       loading: false,
       result: '',
+      error: false,
       safeToRequest: true,
       interval: null,
       timeLeft: 0,
@@ -56,6 +58,7 @@ class Generator extends React.Component {
       return <Container><Spinner /></Container>
     }
     return <Container>
+      {this.state.error && <Error />}
       {this.state.safeToRequest ? <Form onSubmit={this.handleSubmit}>
         <Input
           value={this.state.gamerTag}
@@ -73,12 +76,10 @@ class Generator extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    console.log('hit submit')
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: false, });
     this.fetchData()
   }
   handleChange(event) {
-    console.log('event', event)
     this.setState({ gamerTag: event.target.value })
   }
   fetchData() {
@@ -96,7 +97,10 @@ class Generator extends React.Component {
       })
       .then(res => {
         this.setState({ loading: false, result: res, resultGamerTag: gamerTag })
-      }).catch(console.log);
+      }).catch(error => {
+        console.log(error);
+        this.setState({ error: true, loading: false, });
+      });
   }
   setDelayLogic() {
     const interval = setInterval(() => {
