@@ -1,5 +1,11 @@
 # Node Modules
 node_modules/
 
+# built files
+public/
+
 # Enviroment Variables
 .env
+
+# silly mac
+.DS_Store

@@ -2,6 +2,8 @@
 
 set -e
 
+git checkout -b deploy
+
 function cleanup_at_exit {
   git checkout master
   git branch -D deploy

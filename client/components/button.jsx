@@ -11,6 +11,7 @@ color: #E78435;
 margin: 10px;
 font-family: 'Bungee', cursive;
 border: none;
+background-color: white;
 `;
 
 const Button = (props) => <StyledButton onClick={props.onClick}>Make Image</StyledButton>

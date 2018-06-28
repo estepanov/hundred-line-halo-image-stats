@@ -15,7 +15,6 @@ const Title = styled.div`
 font-family: 'Bungee', cursive;
 font-size: 1.8em;
 color: #9BB6C9;
-text-align: center;
 `;
 
 const Header = () => <StyledHeader>

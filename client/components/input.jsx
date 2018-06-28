@@ -7,6 +7,9 @@ padding: 20px;
 align-items: center;
 justify-content: center;
 font-size: 1.5em;
+@media only screen and (max-device-width: 600px) {
+  font-size: 16px;
+}
 color: #E78435;
 border: solid 5px #E78435;
 margin: 10px;

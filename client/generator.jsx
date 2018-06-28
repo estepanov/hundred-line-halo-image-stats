@@ -21,20 +21,23 @@ const Container = styled.div`
 `;
 
 const Wait = styled.div`
-padding: 10px;
-color: black;
-background-color: white;
-`
+  padding: 10px;
+  color: black;
+  background-color: white;
+`;
 
 const Result = styled.div`
-margin: 30px 0 0 0;
-background-color: white;
+  margin: 30px 0 0 0;
+  background-color: white;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: row;
-  flex-shrink:0;
+  flex-shrink: 0;
+  @media only screen and (max-device-width: 700px) {
+    flex-direction: column;
+  }
 `;
 
 class Generator extends React.Component {
