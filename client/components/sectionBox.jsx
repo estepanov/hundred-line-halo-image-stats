@@ -6,7 +6,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: flex-start;
-border-bottom: ${props => props.borderBottom ? 'solid 1px #25333e' : 'none'};
+border-bottom: ${props => props.borderBottom ? 'solid 1px #144f7b' : 'none'};
 padding: 10px;
 flex-shrink: 0;
 `;

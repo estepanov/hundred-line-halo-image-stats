@@ -15,10 +15,10 @@ color: white;
 margin: 20px;
 `;
 
-const Error = () => <Container>
+const Error = ({ error }) => <Container>
   <SectionBox borderBottom={false}>
-    <SectionHeader color="white">Player Not Found</SectionHeader>
-    Sorry either that isn't a valid Xbox Live Gamer Tag or that user does not play Halo 5.
+    <SectionHeader color="white">{error.title}</SectionHeader>
+    {error.message}
   </SectionBox>
 </Container>
 

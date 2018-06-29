@@ -36,9 +36,21 @@ The `dev` script will launch the backend with nodemon and the front end with web
 
 ## Deployment
 
-This really is not production ready as the images do _NOT_ cache. This means every request will make multiple calls to the Halo Stats API. They have clearly stated their API has a 10 requests per 10 seconds limit. To use this in a real production enviroment you would need to cache the generated image and setup a schedule for clearing that cache.
+This really is not production ready as the images do ___NOT___ cache. This means every request will make multiple calls to the Halo Stats API. They have clearly stated their API has a 10 requests per 10 seconds limit. To use this in a real production enviroment you would need to cache the generated image and setup a schedule for clearing that cache.
 
-With all of that being said, when you want to deploy this run:
+With all of that being said, when you want to deploy this first you need to run the build script for the front end:
+
+```sh
+yarn build
+```
+
+or
+
+```sh
+npm build
+```
+
+and then you can start the server:
 
 ```sh
 yarn start
@@ -53,3 +65,7 @@ npm start
 ## Inspiration
 
 I am a big fan of the Halo video game series. Having been a member, moderator, and admin of numerous video game communities in the past, I was inspired to create a dynamic script that could generate a custom signature containing a gamers statistics.
+
+## How this works
+
+This was my first time using [Jimp](https://github.com/oliver-moran/jimp), short for `JavaScript Image Manipulation Program`. The core index file loads a background image, then begins querying data (JSON) and images. This was tricky because querying the Halo API requiries attaching custom headers with your API key while `Jimp` does not allow setting custom headers for remote file requests. The loading and overlaying of JSON data was simple and straightforward. The loading and ovelaying of images was more complicated. I had to use `Axios` to make the request with the custom header and instruct `Axios` to return an `arraybuffer` data which can be used in `Jimp`.

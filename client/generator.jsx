@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import axios from "axios";
+import React from 'react'
+import styled from 'styled-components'
+import axios from 'axios'
 
-import Input from "./components/input.jsx";
-import Button from "./components/button.jsx";
-import Spinner from "./components/spinner.jsx";
-import SectionBox from "./components/sectionBox.jsx";
-import SectionHeader from "./components/sectionHeader.jsx";
-import ResultInput from "./components/resultInput.jsx";
-import Error from "./components/error.jsx";
+import Input from './components/input.jsx'
+import Button from './components/button.jsx'
+import Spinner from './components/spinner.jsx'
+import SectionBox from './components/sectionBox.jsx'
+import SectionHeader from './components/sectionHeader.jsx'
+import ResultInput from './components/resultInput.jsx'
+import ErrorMessage from './components/error.jsx'
 
 const Container = styled.div`
   display: flex;
@@ -18,18 +18,18 @@ const Container = styled.div`
   padding: 20px;
   margin: 20px;
   flex-shrink: 0;
-`;
+`
 
 const Wait = styled.div`
-  padding: 10px;
+  padding: 15px;
   color: black;
-  background-color: white;
-`;
+  background-color: #f8ff2d;
+`
 
 const Result = styled.div`
-  margin: 30px 0 0 0;
+  margin: 40px 0 0 0;
   background-color: white;
-`;
+`
 
 const Form = styled.form`
   display: flex;
@@ -38,7 +38,7 @@ const Form = styled.form`
   @media only screen and (max-device-width: 700px) {
     flex-direction: column;
   }
-`;
+`
 
 class Generator extends React.Component {
   constructor(props) {
@@ -51,47 +51,82 @@ class Generator extends React.Component {
       error: false,
       safeToRequest: true,
       interval: null,
-      timeLeft: 0,
+      timeLeft: 0
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  componentDidMount() {
+    this.prefilTag();
   }
   render() {
     if (this.state.loading) {
-      return <Container><Spinner /></Container>
+      return (
+        <Container>
+          <Spinner />
+        </Container>
+      )
     }
-    return <Container>
-      {this.state.error && <Error />}
-      {this.state.safeToRequest ? <Form onSubmit={this.handleSubmit}>
-        <Input
-          value={this.state.gamerTag}
-          onChange={this.handleChange} />
-        <Button onClick={this.handleSubmit} />
-      </Form> : <Wait>Please wait <b>{this.state.timeLeft}</b> seconds before making another request.</Wait>}
-      {this.state.result && <Result>
-        <SectionBox>
-          <SectionHeader>{this.state.resultGamerTag.replace(/%20/g, " ") + ' '}Statistics Image</SectionHeader>
-          <ResultInput url={`http://${window.location.hostname}/api/${this.state.resultGamerTag}`} />
-          <img src={this.state.result} />
-        </SectionBox>
-      </Result>}
-    </Container>
+    return (
+      <Container>
+        {this.state.error && <ErrorMessage error={this.state.error} />}
+        {this.state.safeToRequest ? (
+          <Form onSubmit={this.handleSubmit}>
+            <Input value={this.state.gamerTag} onChange={this.handleChange} />
+            <Button onClick={this.handleSubmit} />
+          </Form>
+        ) : (
+            <Wait>
+              Please wait <b>{this.state.timeLeft}</b> seconds before making
+              another request.
+          </Wait>
+          )}
+        {this.state.result && (
+          <Result>
+            <SectionBox>
+              <SectionHeader>
+                {this.state.resultGamerTag.replace(/%20/g, ' ') + ' '}Statistics
+                Image
+              </SectionHeader>
+              <img width="100%" src={this.state.result} />
+              <ResultInput
+                url={`http://${
+                  window.location.hostname
+                  }/api/${this.state.resultGamerTag.replace(
+                    /\s+/g,
+                    '%20'
+                  )}/image.jpg`}
+              />
+            </SectionBox>
+          </Result>
+        )}
+      </Container>
+    )
   }
   handleSubmit(event) {
-    event.preventDefault();
-    this.setState({ loading: true, error: false, });
-    this.fetchData()
+    event.preventDefault()
+    if (this.state.gamerTag.length < 12) {
+      this.setState({
+        error: {
+          title: 'Gamer Tag Length', message: 'Sorry Gamer Tags must be longer than 12 characters.'
+        }, loading: false
+      })
+    } else {
+      this.setState({ loading: true, error: false })
+      this.fetchData()
+    }
   }
   handleChange(event) {
     this.setState({ gamerTag: event.target.value })
   }
   fetchData() {
-    this.setDelayLogic();
-    const gamerTag = this.state.gamerTag.replace(/\s\s+/g, "%20");
-    return axios.get(`/api/${gamerTag}`, { responseType: "blob" })
+    this.setDelayLogic()
+    const gamerTag = this.state.gamerTag.replace(/\s\s+/g, '%20')
+    return axios
+      .get(`/api/${gamerTag}/image.jpg`, { responseType: 'blob' })
       .then(res => {
-        var reader = new window.FileReader();
-        reader.readAsDataURL(res.data);
+        var reader = new window.FileReader()
+        reader.readAsDataURL(res.data)
         return new Promise((resolve, reject) => {
           reader.onload = function () {
             resolve(reader.result)
@@ -100,26 +135,37 @@ class Generator extends React.Component {
       })
       .then(res => {
         this.setState({ loading: false, result: res, resultGamerTag: gamerTag })
-      }).catch(error => {
-        console.log(error);
-        this.setState({ error: true, loading: false, });
-      });
+      })
+      .catch(error => {
+        console.log(error)
+        this.setState({
+          error: {
+            title: 'Player Not Found', message: ' Sorry either that isn\'t a valid Xbox Live Gamer Tag or that user does not play Halo 5.'
+          }, loading: false
+        })
+      })
   }
   setDelayLogic() {
     const interval = setInterval(() => {
-      if (this.state.timeLeft <= 0) {
-        clearInterval(this.state.interval);
+      if (this.state.timeLeft < 1) {
+        clearInterval(this.state.interval)
         this.setState({
           safeToRequest: true,
           interval: null,
-          timeLeft: 0,
-        });
+          timeLeft: 0
+        })
       } else {
         this.setState({ timeLeft: this.state.timeLeft - 1 })
       }
-    }, 1000);
+    }, 1000)
     this.setState({ timeLeft: 20, safeToRequest: false, interval })
+  }
+  prefilTag() {
+    const { search } = location
+    const tagIdentifier = "tag="
+    const tag = search.indexOf(tagIdentifier) + tagIdentifier.length
+    this.setState({ gamerTag: search.slice(tag).replace(/%20/g, ' ') })
   }
 }
 
-export default Generator;
+export default Generator

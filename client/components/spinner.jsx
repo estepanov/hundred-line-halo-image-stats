@@ -8,7 +8,7 @@ align-items: center;
 justify-content: center;
 font-size: 1.6em;
 margin: 30px;
-color: #E78435;
+color: #4b738d;
 `;
 
 const SpinKeyframes = keyframes`
@@ -20,8 +20,8 @@ const Spin = styled.div`
 margin: 20px;
 width: 30px;
 height: 30px;
-border-top-color: #E78435;
-border-left-color: #E78435;
+border-top-color: #4b738d;
+border-left-color: #4b738d;
 
 animation: ${SpinKeyframes} 1s linear infinite;
 border-bottom-color: transparent;

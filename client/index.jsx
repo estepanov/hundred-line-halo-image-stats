@@ -11,7 +11,7 @@ injectGlobal`
     height: 100vh;
     background-color: #D4E0EB;
     font-family: 'Rajdhani', sans-serif;
-    color: #5b717e;
+    color: #54869f;
   }
   #app-root {
     height: 100%;

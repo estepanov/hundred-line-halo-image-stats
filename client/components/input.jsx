@@ -10,10 +10,14 @@ font-size: 1.5em;
 @media only screen and (max-device-width: 600px) {
   font-size: 16px;
 }
-color: #E78435;
-border: solid 5px #E78435;
+color: #4b738d;
+border: solid 3px #4b738d;
 margin: 10px;
 font-family: 'Bungee', cursive;
+&:focus {
+  color: #284a60;
+  border: solid 3px #284a60;
+}
 `;
 
 const Input = (props) => <StyledInput onChange={props.onChange} placeholder="Xbox Live Gamer Tag" value={props.value} />

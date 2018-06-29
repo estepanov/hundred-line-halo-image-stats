@@ -21,7 +21,8 @@
     "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
     "dev-server": "nodemon index",
     "dev-client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "build": "NODE_ENV=production webpack --mode production"
+    "build": "NODE_ENV=production webpack --mode production",
+    "heroku-deploy": "bash heroku-deploy"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
