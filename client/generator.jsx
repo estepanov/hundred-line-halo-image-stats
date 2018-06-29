@@ -105,10 +105,10 @@ class Generator extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault()
-    if (this.state.gamerTag.length < 12) {
+    if (this.state.gamerTag.length < 4) {
       this.setState({
         error: {
-          title: 'Gamer Tag Length', message: 'Sorry Gamer Tags must be longer than 12 characters.'
+          title: 'Gamer Tag Length', message: 'Sorry Gamer Tags must be longer than 3 characters.'
         }, loading: false
       })
     } else {

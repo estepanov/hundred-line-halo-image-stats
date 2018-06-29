@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const Jimp = require('jimp')
 const axios = require('axios')
-const volleyball = require('volleyball') // dont forget to remove when done
+const volleyball = require('volleyball')
 
 app.use(volleyball)
 app.use(express.static('public'))
