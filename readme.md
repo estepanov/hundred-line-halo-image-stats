@@ -4,6 +4,9 @@ Many online forums allow users to have signature which appears bellow every user
 
 The front end of the application is only for user convenience. The real value is the image manipulation in `index.js` file.
 
+The `index.js` file is an Express application that serves up front end and generates an image of a players Halo 5 statistics for specific xbox live gamer tag. For example visiting `http://localhost:8080/api/git%20push%20master/image.jpg` will return:
+![sample of git push master halo 5 statistics](https://github.com/estepanov/hundred-line-halo-image-stats/blob/master/sample.jpg)
+
 ## Configuration
 
 You will need to populate the `.env` file with the appropriate Halo 5 Stats API keys and a server port. You can get these API keys at https://developer.haloapi.com/
