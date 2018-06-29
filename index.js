@@ -47,9 +47,8 @@ app.get('/api/:gamerTag/image.jpg', (req, res) => {
             image.print(font, 10, 160, `${stats.ArenaStats.TotalAssassinations}  Assassinations`)
             image.print(font, 10, 175, `${stats.ArenaStats.TotalGrenadeKills}  Grenade Kills`)
             image.print(font, 10, 215, `${stats.ArenaStats.TotalGamesCompleted}  Completed`)
-            image.print(font, 10, 230, `${stats.ArenaStats.TotalGamesWon}  Wins`)
-            image.print(font, 10, 245, `${stats.ArenaStats.TotalGamesLost}  Losses`)
-            image.print(font, 10, 260, `${((stats.ArenaStats.TotalGamesWon / stats.TotalGamesCompleted) * 100).toFixed(2)}%  Win Percentage`)
+            image.print(font, 10, 230, `${stats.ArenaStats.TotalGamesWon}  Wins (${((stats.ArenaStats.TotalGamesWon / stats.ArenaStats.TotalGamesCompleted) * 100).toFixed(2)}%)`)
+            image.print(font, 10, 245, `${stats.ArenaStats.TotalGamesLost}  Losses (${((stats.ArenaStats.TotalGamesLost / stats.ArenaStats.TotalGamesCompleted) * 100).toFixed(2)}%)`)
             return image
           })
         })
