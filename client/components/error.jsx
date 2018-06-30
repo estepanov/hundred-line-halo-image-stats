@@ -7,19 +7,20 @@ const Container = styled.div`
 display: flex;
 flex-shrink: 0;
 flex-direction: column;
-padding: 10px;
 align-items: center;
 justify-content: center;
 background-color: red;
 color: white;
 margin: 20px;
+width: 100%;
+max-width: 480px;
 `;
 
-const Error = ({ error }) => <Container>
+const ErrorComponent = ({ error }) => <Container>
   <SectionBox borderBottom={false}>
     <SectionHeader color="white">{error.title}</SectionHeader>
     {error.message}
   </SectionBox>
 </Container>
 
-export default Error;
+export default ErrorComponent;

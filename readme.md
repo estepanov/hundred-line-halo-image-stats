@@ -1,10 +1,10 @@
 # One hundred lines of code challenge
 
-Many online forums allow users to have signature which appears bellow every users post. This repo is an uber simple Node.js powered Express.js server that will return an image containing the Halo 5 statistics for a specifc XBox Live Gamer Tag.
+Many online forums allow users to have a custom signature which appears bellow every user's post. This application is an über simple Node.js powered Express.js server that returns an image containing the Halo 5 statistics for a specifc XBox Live Gamer Tag.
 
-The front end of the application is only for user convenience. The real value is the image manipulation in `index.js` file.
+The front end of the application is only for convenience. The real value from this app is the image manipulation in `index.js` file.
 
-The `index.js` file is an Express application that serves up front end and generates an image of a players Halo 5 statistics for specific xbox live gamer tag. For example visiting `http://localhost:8080/api/git%20push%20master/image.jpg` will return:
+The `index.js` file is an Express application that serves up frontend and generates an image of a player's Halo 5 statistics for specific xbox live gamer tag. For example visiting `http://localhost:8080/api/git%20push%20master/image.jpg` will return:
 
 ![sample of git push master halo 5 statistics](https://github.com/estepanov/hundred-line-halo-image-stats/blob/master/sample.jpg)
 
@@ -40,7 +40,7 @@ The `dev` script will launch the backend with nodemon and the front end with web
 
 ## Deployment
 
-This really is not production ready as the images do ___NOT___ cache. This means every request will make multiple calls to the Halo Stats API. They have clearly stated their API has a 10 requests per 10 seconds limit. To use this in a real production enviroment you would need to cache the generated image and setup a schedule for clearing that cache.
+This really is not production ready as the images do ___NOT___ cache. This means every request will make multiple calls to the Halo Stats API. They have clearly stated their API has a 10 requests per 10 seconds limit. To use this in a real production enviroment you would need to cache the generated image and setup a schedule for clearing that cache. You would also need to effectively manage all the initial requests for data to prevent API rate limit trigger. A queue of some sort would probably be best.
 
 With all of that being said, when you want to deploy this first you need to run the build script for the front end:
 
@@ -72,4 +72,4 @@ I am a big fan of the Halo video game series. Having been a member, moderator, a
 
 ## How this works
 
-This was my first time using [Jimp](https://github.com/oliver-moran/jimp), short for `JavaScript Image Manipulation Program`. The core index file loads a background image, then begins querying data (JSON) and images. This was tricky because querying the Halo API requiries attaching custom headers with your API key while `Jimp` does not allow setting custom headers for remote file requests. The loading and overlaying of JSON data was simple and straightforward. The loading and ovelaying of images was more complicated. I had to use `Axios` to make the request with the custom header and instruct `Axios` to return an `arraybuffer` data which can be used in `Jimp`.
+This was my first time using [Jimp](https://github.com/oliver-moran/jimp), short for `JavaScript Image Manipulation Program`. The core `index.js` file loads a background image, then begins querying data (JSON) and images. This was tricky for two reasons. First, querying the Halo API requiries attaching custom headers with your API key. `Jimp` does not allow setting custom headers for remote file requests. Then the loading and overlaying of JSON data was simple and straightforward. The second challenge was loading and ovelaying images. I had to use `Axios` to make the request with the custom header, and instruct `Axios` to return an `arraybuffer` data which can be used in `Jimp`.

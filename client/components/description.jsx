@@ -10,7 +10,7 @@ const Container = styled.div`
   padding: 10px;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const Description = () => (
   <Container>

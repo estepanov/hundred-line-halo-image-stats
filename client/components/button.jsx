@@ -13,6 +13,8 @@ font-family: 'Bungee', cursive;
 border: none;
 background-color: #4b738d;
 cursor: pointer;
+border-radius: 0px;
+outline: none;
 &:hover {
   background-color: #284a60;
 }

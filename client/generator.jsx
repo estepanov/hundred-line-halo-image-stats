@@ -1,14 +1,15 @@
-import React from 'react'
-import styled from 'styled-components'
-import axios from 'axios'
+import React from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
 
-import Input from './components/input.jsx'
-import Button from './components/button.jsx'
-import Spinner from './components/spinner.jsx'
-import SectionBox from './components/sectionBox.jsx'
-import SectionHeader from './components/sectionHeader.jsx'
-import ResultInput from './components/resultInput.jsx'
-import ErrorMessage from './components/error.jsx'
+import Input from './components/input.jsx';
+import Button from './components/button.jsx';
+import Spinner from './components/spinner.jsx';
+import SectionBox from './components/sectionBox.jsx';
+import SectionHeader from './components/sectionHeader.jsx';
+import ResultInput from './components/resultInput.jsx';
+import ErrorMessage from './components/error.jsx';
+import Wait from './components/wait.jsx';
 
 const Container = styled.div`
   display: flex;
@@ -18,13 +19,7 @@ const Container = styled.div`
   padding: 20px;
   margin: 20px;
   flex-shrink: 0;
-`
-
-const Wait = styled.div`
-  padding: 15px;
-  color: black;
-  background-color: #f8ff2d;
-`
+`;
 
 const Result = styled.div`
   margin: 40px 0 0 0;
@@ -38,7 +33,7 @@ const Form = styled.form`
   @media only screen and (max-device-width: 700px) {
     flex-direction: column;
   }
-`
+`;
 
 class Generator extends React.Component {
   constructor(props) {
@@ -76,10 +71,7 @@ class Generator extends React.Component {
             <Button onClick={this.handleSubmit} />
           </Form>
         ) : (
-            <Wait>
-              Please wait <b>{this.state.timeLeft}</b> seconds before making
-              another request.
-          </Wait>
+            <Wait seconds={this.state.timeLeft} />
           )}
         {this.state.result && (
           <Result>
@@ -120,7 +112,6 @@ class Generator extends React.Component {
     this.setState({ gamerTag: event.target.value })
   }
   fetchData() {
-    this.setDelayLogic()
     const gamerTag = this.state.gamerTag.replace(/\s\s+/g, '%20')
     return axios
       .get(`/api/${gamerTag}/image.jpg`, { responseType: 'blob' })
@@ -129,12 +120,14 @@ class Generator extends React.Component {
         reader.readAsDataURL(res.data)
         return new Promise((resolve, reject) => {
           reader.onload = function () {
+
             resolve(reader.result)
           }
         })
       })
       .then(res => {
         this.setState({ loading: false, result: res, resultGamerTag: gamerTag })
+        this.setDelayLogic()
       })
       .catch(error => {
         console.log(error)

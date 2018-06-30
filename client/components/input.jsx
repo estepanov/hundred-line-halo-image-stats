@@ -14,6 +14,8 @@ color: #4b738d;
 border: solid 3px #4b738d;
 margin: 10px;
 font-family: 'Bungee', cursive;
+border-radius: 0px;
+outline: none;
 &:focus {
   color: #284a60;
   border: solid 3px #284a60;
